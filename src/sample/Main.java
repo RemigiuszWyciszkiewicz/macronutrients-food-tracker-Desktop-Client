@@ -2,6 +2,7 @@ package sample;
 
 import Controller.MainFrameController;
 import Controller.ProductListController;
+import Controller.TableController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,10 +18,15 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmls/MainFrame.fxml"));
-
+        FXMLLoader loaderProductList = new FXMLLoader(getClass().getResource("/fxmls/ProductsList.fxml"));
+        FXMLLoader loaderTable = new FXMLLoader(getClass().getResource("/fxmls/Table.fxml"));
+        loaderProductList.load();
+        loaderTable.load();
         Parent root=loader.load();
 
-
+        ProductListController productListController = loaderProductList.getController();
+        TableController tableController = loaderTable.getController();
+        System.out.println(tableController);
 
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root));
@@ -31,10 +37,9 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
         primaryStage.setTitle("HappyLife");*/
-   /*     FXMLLoader loaderProductList = new FXMLLoader(getClass().getResource("/fxmls/ProductsList.fxml"));
-        FXMLLoader loaderTable = new FXMLLoader(getClass().getResource("/fxmls/Table.fxml"));
-        MainFrameController productListController = loader.getController();
-        System.out.println(productListController);*/
+
+
+
 
     }
 

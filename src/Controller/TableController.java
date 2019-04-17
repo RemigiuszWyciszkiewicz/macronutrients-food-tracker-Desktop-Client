@@ -126,7 +126,7 @@ public class TableController {
       //  productsOfCurrentDay.add(new Products());
     }
 
-    void fetchProductsOfDay(String date) throws IOException, JSONException {
+    public void fetchProductsOfDay(String date) throws IOException, JSONException {
        JSONArray jsonArray = HttpRequests.readJsonFromUrl("http://localhost:8080/App/productsOfDay?date="+date);
 
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -139,7 +139,7 @@ public class TableController {
         }
     }
 
-    Boolean checkIfDateAlreadyExist(String data)
+    public Boolean checkIfDateAlreadyExist(String data)
     {
         if(daysObservableList.size()>0) {
             if (daysObservableList.get(daysObservableList.size() - 1).equals(data)) return true;
