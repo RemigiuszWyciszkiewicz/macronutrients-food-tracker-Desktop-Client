@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="892.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TableController">
+   <children>
+      <HBox prefHeight="39.0" prefWidth="890.0" spacing="20.0">
+         <children>
+            <ComboBox fx:id="daysComboBox" prefHeight="27.0" prefWidth="157.0" />
+            <TextField fx:id="productNameTextField" />
+            <TextField fx:id="amountTexTfield" />
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#dodajDoListy" text="Dodaj" />
+            <Button mnemonicParsing="false" onAction="#dodajDzien" text="Nowy Dzień" />
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#usunDayProduct" text="Usuń" />
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </HBox>
+      <StackPane prefHeight="389.0" prefWidth="892.0">
+         <children>
+            <TableView fx:id="tablewiew" prefHeight="348.0" prefWidth="892.0">
+              <columns>
+                <TableColumn fx:id="produktColumn" prefWidth="279.0" text="Produkt" />
+                  <TableColumn fx:id="amountColumns" prefWidth="136.0" text="Ilość" />
+                  <TableColumn fx:id="caloriesColumn" prefWidth="97.0" text="KCAL" />
+                  <TableColumn fx:id="proteinColumn" prefWidth="127.0" text="Białko" />
+                  <TableColumn fx:id="fatsColumn" prefWidth="125.0" text="Tłuszcze" />
+                  <TableColumn fx:id="carbsColumn" prefWidth="127.0" text="Węglowodany" />
+              </columns>
+            </TableView>
+         </children>
+      </StackPane>
+      <HBox alignment="CENTER_RIGHT" prefHeight="49.0" prefWidth="892.0" spacing="10.0">
+         <children>
+            <Label prefHeight="48.0" prefWidth="92.0" text="SUMA" textFill="#050000">
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Label>
+            <Label fx:id="sumCaloriesLabel" contentDisplay="CENTER" prefHeight="39.0" prefWidth="67.0" text="3213" textAlignment="CENTER" textFill="#4400ff">
+               <font>
+                  <Font name="System Bold" size="27.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="25.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="sumOfProteinLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="94.0" text="212" textAlignment="CENTER" textFill="#e000f5">
+               <font>
+                  <Font name="System Bold" size="31.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Label>
+            <Label />
+         </children>
+      </HBox>
+   </children>
+</VBox>

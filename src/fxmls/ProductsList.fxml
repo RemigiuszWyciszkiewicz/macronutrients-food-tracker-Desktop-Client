@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="401.0" prefWidth="915.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProductListController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="70.0" prefWidth="915.0" spacing="15.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="94.0" text="Nazwa Produktu" />
+                  <TextField fx:id="nameTextField" />
+               </children>
+            </VBox>
+            <VBox prefHeight="42.0" prefWidth="69.0">
+               <children>
+                  <Label text="KCAL" />
+                  <TextField fx:id="caloriesTextField" prefHeight="25.0" prefWidth="84.0" />
+               </children>
+            </VBox>
+            <VBox prefHeight="42.0" prefWidth="69.0">
+               <children>
+                  <Label text="Białko" />
+                  <TextField fx:id="proteinTextField" />
+               </children>
+            </VBox>
+            <VBox prefHeight="42.0" prefWidth="74.0">
+               <children>
+                  <Label text="Tłuszcze" />
+                  <TextField fx:id="fatsTextField" prefHeight="25.0" prefWidth="87.0" />
+               </children>
+            </VBox>
+            <VBox prefHeight="42.0" prefWidth="79.0">
+               <children>
+                  <Label text="Węglowodany" />
+                  <TextField fx:id="carbsTextField" />
+               </children>
+            </VBox>
+            <Button fx:id="addPrzycisk" mnemonicParsing="false" onAction="#addProduct" text="Dodaj" />
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteProduct" text="Usuń" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+      </HBox>
+      <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="379.0" prefWidth="915.0">
+         <children>
+            <TableView fx:id="produktyTableView" prefHeight="430.0" prefWidth="578.0">
+              <columns>
+                <TableColumn fx:id="NazwaColumn" prefWidth="213.0" text="Nazwa Produktu" />
+                  <TableColumn fx:id="caloriesColumn" prefWidth="84.0" text="KCAL" />
+                  <TableColumn fx:id="proteinColumn" prefWidth="95.0" text="Białko" />
+                  <TableColumn fx:id="fatsColumn" prefWidth="95.0" text="Tłuszcze" />
+                  <TableColumn fx:id="carbsColumn" prefWidth="105.0" text="Węglowodany" />
+              </columns>
+            </TableView>
+         </children>
+      </FlowPane>
+   </children>
+</VBox>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="oknoGlowneVbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="938.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainFrameController">
+      <AnchorPane prefHeight="55.0" prefWidth="735.0">
+      <children>
+             <fx:include fx:id="PanelGorny" source="UpperPanel.fxml" />
+      </children>
+      <opaqueInsets>
+         <Insets />
+      </opaqueInsets>
+      <VBox.margin>
+         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+      </VBox.margin></AnchorPane>
+   <StackPane fx:id="stackPaneGłówny" alignment="TOP_LEFT" prefHeight="573.0" prefWidth="1208.0">
+      <VBox.margin>
+         <Insets bottom="17.0" left="20.0" right="17.0" top="15.0" />
+      </VBox.margin></StackPane>
+
+</VBox>
