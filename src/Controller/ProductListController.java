@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Optional;
@@ -33,13 +34,15 @@ public class ProductListController {
     @FXML Button deleteButton;
 
 
-   static ObservableList<Products> listOfProductsObservable = FXCollections.observableArrayList();
+    static ObservableList<Products> listOfProductsObservable = FXCollections.observableArrayList();
 
     public ProductListController() {
     }
 
     @FXML
     void initialize() {
+
+        System.out.println("CONTROLLER");
 
         listOfProductsObservable.clear();
         try {
@@ -160,6 +163,7 @@ public class ProductListController {
                     ,jsonValues.getJSONObject(i).getDouble("carbohydrates")));
         }
     }
+
 
    static void ErrorAlert(String msg)
     {

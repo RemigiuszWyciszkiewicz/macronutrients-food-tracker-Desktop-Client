@@ -18,16 +18,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmls/MainFrame.fxml"));
-        FXMLLoader loaderProductList = new FXMLLoader(getClass().getResource("/fxmls/ProductsList.fxml"));
-        FXMLLoader loaderTable = new FXMLLoader(getClass().getResource("/fxmls/Table.fxml"));
-        loaderProductList.load();
-        loaderTable.load();
+
         Parent root=loader.load();
-
-        ProductListController productListController = loaderProductList.getController();
-        TableController tableController = loaderTable.getController();
-        System.out.println(tableController);
-
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

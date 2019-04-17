@@ -106,6 +106,7 @@ public class Products {
     }
 
 
+    @Override
     public String toString() {
         return nazwaProduktu.getValue();
     }

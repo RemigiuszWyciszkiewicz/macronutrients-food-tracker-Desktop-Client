@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.lang.Object;
@@ -121,13 +122,16 @@ public class TableController {
             jsonObject.put("day",daysComboBox.getValue().toString());
             jsonObject.put("product",productNameTextField.getText());
             HttpRequests.sendJsonToApi(jsonObject,"http://localhost:8080/App/connection");
+            productsOfCurrentDay.addAll(
+                    ProductListController.listOfProductsObservable.filtered((a)-> a.getNazwaProduktu().equals(productNameTextField.getText())));
         }catch (JSONException|IOException e)
         {e.printStackTrace(); }
-      //  productsOfCurrentDay.add(new Products());
     }
 
-    public void fetchProductsOfDay(String date) throws IOException, JSONException {
+     void fetchProductsOfDay(String date) throws IOException, JSONException {
        JSONArray jsonArray = HttpRequests.readJsonFromUrl("http://localhost:8080/App/productsOfDay?date="+date);
+
+       //  System.out.println(jsonArray.getJSONObject(1).get("connectionsList"));
 
         for (int i = 0; i < jsonArray.length(); i++) {
             productsOfCurrentDay.add(new Products(
@@ -135,11 +139,13 @@ public class TableController {
                     ,jsonArray.getJSONObject(i).getInt("calories")
                     ,jsonArray.getJSONObject(i).getDouble("protein")
                     ,jsonArray.getJSONObject(i).getDouble("fats")
-                    ,jsonArray.getJSONObject(i).getDouble("carbohydrates")));
+                    ,jsonArray.getJSONObject(i).getDouble("carbohydrates")
+                    ,jsonArray.getJSONObject(i).getInt("amount")
+                    ));
         }
     }
 
-    public Boolean checkIfDateAlreadyExist(String data)
+     Boolean checkIfDateAlreadyExist(String data)
     {
         if(daysObservableList.size()>0) {
             if (daysObservableList.get(daysObservableList.size() - 1).equals(data)) return true;
@@ -181,7 +187,12 @@ public class TableController {
     @FXML
     void usunDayProduct()
     {
-
+      //  try {
+//            HttpRequests.deleteRequest("http://localhost:8080/App/productsOfDay?name="
+//                    + URLEncoder.encode(tablewiew.getSelectionModel().getSelectedItem().toString(),"UTF-8")
+//                    +"&day="+daysComboBox.getSelectionModel().getSelectedItem().toString()+"&amount="+);
+         //   System.out.println(((Products)tablewiew.getSelectionModel().getSelectedItem()).getIloscProduktu());
+       // } catch (IOException e) { e.printStackTrace(); }
     }
 
 
