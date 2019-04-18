@@ -77,15 +77,6 @@ public class ProductListController {
 
             Optional<JSONObject> jsonObject=Optional.ofNullable(HttpRequests.sendJsonToApi(createJSONfromTextFields(),"http://localhost:8080/App/product"));
 
-
-           /* jsonObject.ifPresent((a) -> {
-                try {
-                    if(a.getInt("status")==400) ErrorAlert("Taki produkt już istnienie.");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            });*/
-
            if(jsonObject.isPresent()) {
                if (jsonObject.get().getInt("status") == 400) ErrorAlert("Taki produkt już istnienie.");
            }else { listOfProductsObservable.add(new Products(
@@ -121,6 +112,10 @@ public class ProductListController {
             jsonObject.put("carbohydrates", carbsTextField.getText());
         }catch (JSONException e)
         {e.getCause();}
+        catch (NumberFormatException a)
+        {
+            this.ErrorAlert("Wpisz makroskładniki!");
+        }
         return jsonObject;
     }
 

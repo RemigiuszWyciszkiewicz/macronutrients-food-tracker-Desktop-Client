@@ -49,6 +49,7 @@ public class TableController {
     List productsORM;
     ObservableList<Products> productsOfCurrentDay =FXCollections.observableArrayList();
     ListProperty listofdaysPropList=new SimpleListProperty();
+    String selelectedDate;
 
     int sumCalories =0;
     float sumprotein=0;
@@ -75,7 +76,8 @@ public class TableController {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 productsOfCurrentDay.clear();
                 try {
-                    fetchProductsOfDay(newValue.toString());
+                    selelectedDate=newValue.toString();
+                    fetchProductsOfDay(selelectedDate);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -121,11 +123,22 @@ public class TableController {
             jsonObject.put("amount",Integer.valueOf(amountTexTfield.getText()));
             jsonObject.put("day",daysComboBox.getValue().toString());
             jsonObject.put("product",productNameTextField.getText());
-            HttpRequests.sendJsonToApi(jsonObject,"http://localhost:8080/App/connection");
-            productsOfCurrentDay.addAll(
-                    ProductListController.listOfProductsObservable.filtered((a)-> a.getNazwaProduktu().equals(productNameTextField.getText())));
+            JSONObject responseJson=HttpRequests.sendJsonToApi(jsonObject,"http://localhost:8080/App/connection");
+
+            Optional.ofNullable(responseJson).ifPresent((a) -> { ProductListController.ErrorAlert("Proszę wybrać produkt z listy."); });
+
+            productsOfCurrentDay.clear();
+            fetchProductsOfDay(selelectedDate);
+
+           /* productsOfCurrentDay.addAll(
+                    ProductListController.listOfProductsObservable.filtered((a)-> a.getNazwaProduktu().equals(productNameTextField.getText())));*/
+
         }catch (JSONException|IOException e)
         {e.printStackTrace(); }
+        catch (NumberFormatException e)
+        {
+            ProductListController.ErrorAlert("Wpisz wagę!");
+        }
     }
 
      void fetchProductsOfDay(String date) throws IOException, JSONException {
@@ -187,86 +200,17 @@ public class TableController {
     @FXML
     void usunDayProduct()
     {
-      //  try {
-//            HttpRequests.deleteRequest("http://localhost:8080/App/productsOfDay?name="
-//                    + URLEncoder.encode(tablewiew.getSelectionModel().getSelectedItem().toString(),"UTF-8")
-//                    +"&day="+daysComboBox.getSelectionModel().getSelectedItem().toString()+"&amount="+);
-         //   System.out.println(((Products)tablewiew.getSelectionModel().getSelectedItem()).getIloscProduktu());
-       // } catch (IOException e) { e.printStackTrace(); }
+        try {
+            HttpRequests.deleteRequest("http://localhost:8080/App/productsOfDay?name="
+                    + URLEncoder.encode(tablewiew.getSelectionModel().getSelectedItem().toString(),"UTF-8")
+                    +"&day="+daysComboBox.getSelectionModel().getSelectedItem().toString()+"&amount="
+                    +((Products)tablewiew.getSelectionModel().getSelectedItem()).getIloscProduktu());
+
+            productsOfCurrentDay.remove(tablewiew.getSelectionModel().getSelectedItem());
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
 
-
-
-    void pobierzListeProduktów(int id)
-    {
-//        productsOfCurrentDay.clear();
-//        SessionFactory factory=HibernateSesionFactory.sesjaFactory;
-//        Session sesja=factory.getCurrentSession();
-//        sesja.beginTransaction();
-//        DayORM pobrany=sesja.get(DayORM.class,id);
-//        pobrany.getProducts().size();
-//        productsORMList =pobrany.getProducts();
-//        productsORMList = removeDuplicats(productsORMList);
-//
-//        for(ProductsORM produkt: productsORMList)
-//        {
-//
-//            List<DayProductsLinking> pobranyDay_productsLinking = sesja
-//                    .createQuery("select p from DayProductsLinking p where p.produkt_id ="+produkt.getId()+"and p.day_of_life_id="+id, DayProductsLinking.class).list();
-//
-//            for(int i = 0; i< pobranyDay_productsLinking.size(); i++) {
-//                productsOfCurrentDay.add(new Products(produkt.getNazwa(), countCalories(pobranyDay_productsLinking.get(i).getIlosc(),produkt.getKcal())
-//                        ,obliczbiałko(pobranyDay_productsLinking.get(i).getIlosc(),produkt.getBialko()), pobranyDay_productsLinking.get(i).getIlosc(),produkt));
-//
-//                sumCalories = sumCalories + countCalories(pobranyDay_productsLinking.get(i).getIlosc(),produkt.getKcal());
-//                sumprotein = sumprotein +obliczbiałko(pobranyDay_productsLinking.get(i).getIlosc(),produkt.getBialko());
-//                updateCounter();
-//            }
-//        }
-//        sesja.getTransaction().commit();
-//
-    }
-
-//    List removeDuplicats(List list)
-//    {
-//        HashSet nowalistya=new HashSet<ProductsORM>(list);
-//        return new ArrayList(nowalistya);
-//    }
-
-
-//    List fetchDayList()
-//    {
-//        SessionFactory factory=HibernateSesionFactory.sesjaFactory;
-//        Session sesja=factory.getCurrentSession();
-//        sesja.beginTransaction();
-//        List<DayORM> listaDni=sesja.createQuery("from DayORM").list();
-//
-//        sesja.getTransaction().commit();
-//        return  listaDni;
-//    }
-
-    int countCalories(int amount, int calorific)
-    {
-        float wsp=(float) amount/100;
-        float floatResult = wsp*calorific;
-
-        return (int)floatResult;
-    }
-
-    int obliczbiałko(int ilosc,float bialko)
-    {
-        float wsp=(float) ilosc/100;
-        float wynikfloat = wsp*bialko;
-
-        return (int)wynikfloat;
-    }
-
-    void updateCounter()
-    {
-        sumCaloriesLabel.setText(sumCalories +"");
-        sumOfProteinLabel.setText((int) sumprotein +"");
-    }
 
 }
 
