@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -41,34 +42,39 @@
             </TableView>
          </children>
       </StackPane>
-      <HBox alignment="CENTER_RIGHT" prefHeight="49.0" prefWidth="892.0" spacing="10.0">
+      <FlowPane alignment="CENTER_RIGHT" columnHalignment="CENTER">
          <children>
-            <Label prefHeight="48.0" prefWidth="92.0" text="SUMA" textFill="#050000">
-               <HBox.margin>
-                  <Insets right="20.0" />
-               </HBox.margin>
+            <Label fx:id="sumCaloriesLabel" contentDisplay="CENTER" prefHeight="40.0" prefWidth="70.0" text="999" textAlignment="CENTER" textFill="#189e00">
                <font>
-                  <Font name="System Bold" size="26.0" />
+                  <Font name="System Bold" size="25.0" />
                </font>
+               <FlowPane.margin>
+                  <Insets right="55.0" />
+               </FlowPane.margin>
             </Label>
-            <Label fx:id="sumCaloriesLabel" contentDisplay="CENTER" prefHeight="39.0" prefWidth="67.0" text="3213" textAlignment="CENTER" textFill="#4400ff">
+            <Label fx:id="sumOfProteinLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="70.0" text="999" textAlignment="CENTER" textFill="#2992ff">
                <font>
-                  <Font name="System Bold" size="27.0" />
+                  <Font name="System Bold" size="25.0" />
                </font>
-               <HBox.margin>
-                  <Insets right="25.0" />
-               </HBox.margin>
+               <FlowPane.margin>
+                  <Insets right="60.0" />
+               </FlowPane.margin>
             </Label>
-            <Label fx:id="sumOfProteinLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="46.0" prefWidth="94.0" text="212" textAlignment="CENTER" textFill="#e000f5">
+            <Label fx:id="sumOfFatsLabel" prefHeight="40.0" prefWidth="70.0" text="999" textFill="#2992ff">
                <font>
-                  <Font name="System Bold" size="31.0" />
+                  <Font name="System Bold" size="25.0" />
                </font>
-               <HBox.margin>
-                  <Insets right="20.0" />
-               </HBox.margin>
+               <FlowPane.margin>
+                  <Insets right="50.0" />
+               </FlowPane.margin>
+            </Label>
+            <Label fx:id="sumOfCarbsLabel" prefHeight="40.0" prefWidth="70.0" text="999" textFill="#2992ff">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
             </Label>
             <Label />
          </children>
-      </HBox>
+      </FlowPane>
    </children>
 </VBox>

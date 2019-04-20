@@ -36,29 +36,27 @@ public class TableController {
     @FXML TextField productNameTextField;
     @FXML ComboBox daysComboBox;
     @FXML TextField amountTexTfield;
-    @FXML Label sumCaloriesLabel;
-    @FXML Label sumOfProteinLabel;
     @FXML Button addButton;
     @FXML Button deleteButton;
+    @FXML Label sumCaloriesLabel;
+    @FXML Label sumOfProteinLabel;
+    @FXML Label sumOfCarbsLabel;
+    @FXML Label sumOfFatsLabel;
 
     ObservableList<String> daysObservableList=FXCollections.observableArrayList();
-
-
-    ProductListController productListController;
-    //List<ProductsORM> productsORMList;
-    List productsORM;
     ObservableList<Products> productsOfCurrentDay =FXCollections.observableArrayList();
+
     ListProperty listofdaysPropList=new SimpleListProperty();
+
     String selelectedDate;
 
-    int sumCalories =0;
-    float sumprotein=0;
+    double proteinSum=0;
+    double carbsSum=0;
+    double fatsSum=0;
+    int caloriesSum=0;
 
 
-    public TableController(){
-
-
-    }
+    public TableController(){}
 
 
     @FXML
@@ -67,9 +65,6 @@ public class TableController {
         convertJsonArrayToObservableList();
 
         addButton.disableProperty().bind(amountTexTfield.textProperty().isEmpty().or(productNameTextField.textProperty().isEmpty()));
-        sumOfProteinLabel.setText(sumprotein +"");
-        sumCaloriesLabel.setText(sumCalories +"");
-
 
         daysComboBox.valueProperty().addListener(new ChangeListener() {
             @Override
@@ -84,11 +79,6 @@ public class TableController {
                     e.printStackTrace();
                 }
 
-//
-//                sumOfProteinLabel.setText("0");
-//                sumCaloriesLabel.setText("0");
-//                sumprotein =0;
-//                sumCalories =0;
 
            //     int id=((DayORM)newValue).getId();
 //                pobierzListeProduktów(id);
@@ -156,6 +146,7 @@ public class TableController {
                     ,jsonArray.getJSONObject(i).getInt("amount")
                     ));
         }
+         sumMacrosAndUpdateLabels();
     }
 
      Boolean checkIfDateAlreadyExist(String data)
@@ -166,6 +157,28 @@ public class TableController {
         }else return false;
     }
 
+    void resetMAcros()
+    {
+        proteinSum=0;
+        fatsSum=0;
+        carbsSum=0;
+        caloriesSum=0;
+    }
+
+    void sumMacrosAndUpdateLabels()
+    {
+        resetMAcros();
+
+        productsOfCurrentDay.forEach((a) -> caloriesSum=caloriesSum+a.getKcalProduktu());
+        productsOfCurrentDay.forEach((a) -> proteinSum=proteinSum+a.getBiałkoProduktu());
+        productsOfCurrentDay.forEach((a) -> fatsSum=fatsSum+a.getTluszczeProduktu());
+        productsOfCurrentDay.forEach((a) -> carbsSum=carbsSum+a.getWeglowodanyProduktu());
+
+        sumCaloriesLabel.setText(caloriesSum+"");
+        sumOfProteinLabel.setText(proteinSum+"");
+        sumOfCarbsLabel.setText(carbsSum+"");
+        sumOfFatsLabel.setText(fatsSum+"");
+    }
     @FXML
     void dodajDzien() {
     try {
