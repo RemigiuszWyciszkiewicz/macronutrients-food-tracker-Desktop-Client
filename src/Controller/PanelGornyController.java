@@ -32,6 +32,7 @@ public class PanelGornyController {
     @FXML
     void launchProductList()
     {
+
         mainFrameController.setCentre("/fxmls/ProductsList.fxml");
 
     }

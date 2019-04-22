@@ -14,6 +14,7 @@ import org.controlsfx.control.textfield.TextFields;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import sample.Main;
 
 
 import java.io.IOException;
@@ -62,6 +63,7 @@ public class TableController {
     @FXML
     void initialize() {
 
+        
         convertJsonArrayToObservableList();
 
         addButton.disableProperty().bind(amountTexTfield.textProperty().isEmpty().or(productNameTextField.textProperty().isEmpty()));
@@ -101,6 +103,8 @@ public class TableController {
         listofdaysPropList.set(daysObservableList);
         daysComboBox.itemsProperty().bindBidirectional(listofdaysPropList);
         daysComboBox.getSelectionModel().selectLast();
+
+
     }
 
 
@@ -113,7 +117,7 @@ public class TableController {
             jsonObject.put("amount",Integer.valueOf(amountTexTfield.getText()));
             jsonObject.put("day",daysComboBox.getValue().toString());
             jsonObject.put("product",productNameTextField.getText());
-            JSONObject responseJson=HttpRequests.sendJsonToApi(jsonObject,"http://localhost:8080/App/connection");
+            JSONObject responseJson=HttpRequests.sendJsonToApi(jsonObject,"http://localhost:8080/App/connection/"+Main.currentUserId);
 
             Optional.ofNullable(responseJson).ifPresent((a) -> { ProductListController.ErrorAlert("Proszę wybrać produkt z listy."); });
 
@@ -132,7 +136,7 @@ public class TableController {
     }
 
      void fetchProductsOfDay(String date) throws IOException, JSONException {
-       JSONArray jsonArray = HttpRequests.readJsonFromUrl("http://localhost:8080/App/productsOfDay?date="+date);
+       JSONArray jsonArray = HttpRequests.readJsonFromUrl("http://localhost:8080/App/productOfDay/"+ Main.currentUserId+"?date="+date);
 
        //  System.out.println(jsonArray.getJSONObject(1).get("connectionsList"));
 
@@ -188,7 +192,7 @@ public class TableController {
 
         if(!checkIfDateAlreadyExist(now)) {
             JSONObject jsonObject = new JSONObject().put("date", now);
-            HttpRequests.sendJsonToApi(jsonObject, "http://localhost:8080/App/day");
+            HttpRequests.sendJsonToApi(jsonObject, "http://localhost:8080/App/day/"+Main.currentUserId+"?date="+now);
             daysObservableList.add(now);
         }else ProductListController.ErrorAlert("Nowy dzień już został dodany");
 
@@ -199,7 +203,7 @@ public class TableController {
     void convertJsonArrayToObservableList()
     {
         try {
-        JSONArray jsonArray=HttpRequests.readJsonFromUrl("http://localhost:8080/App/days");
+        JSONArray jsonArray=HttpRequests.readJsonFromUrl("http://localhost:8080/App/days/"+Main.currentUserId);
         for (int i = 0; i < jsonArray.length(); i++) {
 
             daysObservableList.add(jsonArray.getJSONObject(i).getString("date"));
