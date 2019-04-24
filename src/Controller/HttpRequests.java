@@ -29,6 +29,8 @@ public class HttpRequests {
 
         BufferedReader bufferedReader;
         Integer responseCode = httpConnection.getResponseCode();
+
+
         ;
 /*
         if (responseCode > 199 && responseCode < 300) {
@@ -128,4 +130,6 @@ public class HttpRequests {
             return responeFromApi;
         }else return null;
     }
+
+
 }

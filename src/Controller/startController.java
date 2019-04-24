@@ -4,6 +4,7 @@ package Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -50,13 +51,22 @@ public class startController {
         else
         {
             Main.currentUserId=responeData.getInt("id");
-            Main.startStage.close();
-            Main.stage.show();
+            changeStage();
+            Main.startScene.getWindow().hide();
+
+
         }
         }catch (JSONException|IOException a)
         {a.printStackTrace();}
     }
-
+    void changeStage() throws IOException {
+        Stage stage=new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmls/MainFrame.fxml"));
+        Parent root=loader.load();
+        Scene appScene=new Scene(root);
+        stage.setScene(appScene);
+        stage.show();
+    }
     @FXML
     void goToRegisterPage()
     {

@@ -22,7 +22,7 @@
             <TextField fx:id="amountTexTfield" />
             <Button fx:id="addButton" mnemonicParsing="false" onAction="#dodajDoListy" text="Dodaj" />
             <Button mnemonicParsing="false" onAction="#dodajDzien" text="Nowy Dzień" />
-            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#usunDayProduct" text="Usuń" />
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteProduct" text="Usuń" />
          </children>
          <VBox.margin>
             <Insets />

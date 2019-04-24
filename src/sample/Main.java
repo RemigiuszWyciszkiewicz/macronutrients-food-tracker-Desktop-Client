@@ -14,28 +14,23 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 
-    static public Stage startStage=new Stage();
-    static public Stage stage=new Stage();
+    static public Scene startScene;
     static public int currentUserId;
+
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmls/MainFrame.fxml"));
-        Parent root=loader.load();
+    public void start(Stage startStage) throws Exception{
 
         FXMLLoader loader_2 = new FXMLLoader(getClass().getResource("/fxmls/startPage.fxml"));
         Parent root_2=loader_2.load();
 
-        stage=primaryStage;
 
-        Scene appScene=new Scene(root);
-
-        Scene startScene=new Scene(root_2);
+        startScene=new Scene(root_2);
         startStage.setScene(startScene);
         startStage.show();
 
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(appScene);
-        primaryStage.setTitle("HappyLife");
+      //  primaryStage.setTitle("Hello World");
+      //  primaryStage.setScene(appScene);
+       // primaryStage.setTitle("HappyLife");
       //  primaryStage.show();
 
     }

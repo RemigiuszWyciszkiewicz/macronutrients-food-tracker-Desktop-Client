@@ -62,8 +62,8 @@ public class TableController {
 
     @FXML
     void initialize() {
+        System.out.println("test");
 
-        
         convertJsonArrayToObservableList();
 
         addButton.disableProperty().bind(amountTexTfield.textProperty().isEmpty().or(productNameTextField.textProperty().isEmpty()));
@@ -117,7 +117,8 @@ public class TableController {
             jsonObject.put("amount",Integer.valueOf(amountTexTfield.getText()));
             jsonObject.put("day",daysComboBox.getValue().toString());
             jsonObject.put("product",productNameTextField.getText());
-            JSONObject responseJson=HttpRequests.sendJsonToApi(jsonObject,"http://localhost:8080/App/connection/"+Main.currentUserId);
+            System.out.println(jsonObject);
+            JSONObject responseJson=HttpRequests.sendJsonToApi(jsonObject,"http://localhost:8080/App/productOfDay/"+Main.currentUserId);
 
             Optional.ofNullable(responseJson).ifPresent((a) -> { ProductListController.ErrorAlert("Proszę wybrać produkt z listy."); });
 
@@ -135,7 +136,7 @@ public class TableController {
         }
     }
 
-     void fetchProductsOfDay(String date) throws IOException, JSONException {
+     private void fetchProductsOfDay(String date) throws IOException, JSONException {
        JSONArray jsonArray = HttpRequests.readJsonFromUrl("http://localhost:8080/App/productOfDay/"+ Main.currentUserId+"?date="+date);
 
        //  System.out.println(jsonArray.getJSONObject(1).get("connectionsList"));
@@ -153,7 +154,7 @@ public class TableController {
          sumMacrosAndUpdateLabels();
     }
 
-     Boolean checkIfDateAlreadyExist(String data)
+    private Boolean checkIfDateAlreadyExist(String data)
     {
         if(daysObservableList.size()>0) {
             if (daysObservableList.get(daysObservableList.size() - 1).equals(data)) return true;
@@ -161,7 +162,7 @@ public class TableController {
         }else return false;
     }
 
-    void resetMAcros()
+    private void resetMAcros()
     {
         proteinSum=0;
         fatsSum=0;
@@ -169,7 +170,7 @@ public class TableController {
         caloriesSum=0;
     }
 
-    void sumMacrosAndUpdateLabels()
+    private void sumMacrosAndUpdateLabels()
     {
         resetMAcros();
 
@@ -200,10 +201,12 @@ public class TableController {
 
     }
 
-    void convertJsonArrayToObservableList()
+    private void convertJsonArrayToObservableList()
     {
+
         try {
         JSONArray jsonArray=HttpRequests.readJsonFromUrl("http://localhost:8080/App/days/"+Main.currentUserId);
+
         for (int i = 0; i < jsonArray.length(); i++) {
 
             daysObservableList.add(jsonArray.getJSONObject(i).getString("date"));
@@ -215,16 +218,17 @@ public class TableController {
     }
 
     @FXML
-    void usunDayProduct()
+    void deleteProduct()
     {
+        JSONObject jsonObject = new JSONObject();
         try {
-            HttpRequests.deleteRequest("http://localhost:8080/App/productsOfDay?name="
-                    + URLEncoder.encode(tablewiew.getSelectionModel().getSelectedItem().toString(),"UTF-8")
-                    +"&day="+daysComboBox.getSelectionModel().getSelectedItem().toString()+"&amount="
-                    +((Products)tablewiew.getSelectionModel().getSelectedItem()).getIloscProduktu());
+            HttpRequests.deleteRequest("http://localhost:8080/App/productsOfDay/"+Main.currentUserId);
+            jsonObject.put("name",URLEncoder.encode(tablewiew.getSelectionModel().getSelectedItem().toString(),"UTF-8"));
+            jsonObject.put("day",daysComboBox.getSelectionModel().getSelectedItem().toString());
+            jsonObject.put("amount",((Products)tablewiew.getSelectionModel().getSelectedItem()).getIloscProduktu());
 
             productsOfCurrentDay.remove(tablewiew.getSelectionModel().getSelectedItem());
-        } catch (IOException e) { e.printStackTrace(); }
+        } catch (IOException|JSONException e) { e.printStackTrace(); }
     }
 
 
